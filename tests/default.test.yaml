@@ -1,0 +1,17 @@
+test_metadata:
+  type: config
+  name: default
+  description: set the description for your test
+
+ssm_parameters:
+  test:
+    name: /my/ssm/param
+    value: xyz
+  test-with-desc:
+    name: /my/ssm/param1
+    value: xyz
+    description: my cool ssm param
+  test-with-pattern:
+    name: /my/ssm/param2
+    value: xyz
+    allowed_pattern: "^[a-zA-Z]{1,10}$"
