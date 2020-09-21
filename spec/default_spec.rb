@@ -54,4 +54,18 @@ describe 'compiled component' do
       expect(properties["AllowedPattern"]).to eq("^[a-zA-Z]{1,10}$")
     end
   end
+
+  context 'Test Default Tags for SSM Parameter' do
+    let(:tags) { template["Resources"]["testParameter"]["Properties"]['Tags'] }
+
+    it 'has default Environment Tag' do
+      puts tags
+      expect(tags["Environment"]).to eq({"Ref" => "EnvironmentName"})
+    end
+   
+    it 'has default EnvironmentType Tag' do
+      puts tags
+      expect(tags["EnvironmentType"]).to eq({"Ref" => "EnvironmentType"})
+    end
+  end
 end

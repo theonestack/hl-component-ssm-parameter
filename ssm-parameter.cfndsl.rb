@@ -1,10 +1,8 @@
 CloudFormation do
 
   tags = external_parameters.fetch(:tags, {})
-  ssm_param_tags = []
-  ssm_param_tags.push({ Key: 'Environment', Value: Ref(:EnvironmentName) })
-  ssm_param_tags.push({ Key: 'EnvironmentType', Value: Ref(:EnvironmentType) })
-  ssm_param_tags.push(*tags.map {|k,v| {Key: FnSub(k), Value: FnSub(v)}})
+  tags.merge!({ Environment: Ref(:EnvironmentName) })
+  tags.merge!({ EnvironmentType: Ref(:EnvironmentType) })
 
   ssm_parameters =  external_parameters.fetch(:ssm_parameters, {})
 
@@ -15,7 +13,7 @@ CloudFormation do
       Value FnSub(ssm_param['value'])
       Description  FnSub(ssm_param['description']) if ssm_param.has_key?('description')
       AllowedPattern  ssm_param['allowed_pattern'] if ssm_param.has_key?('allowed_pattern')
-      Tags ssm_param_tags
+      Tags tags
     end
   end
 
